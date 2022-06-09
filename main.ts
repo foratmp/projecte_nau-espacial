@@ -1,7 +1,39 @@
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 4 4 . . . . . . . 
+        . . . . . . 4 5 5 4 . . . . . . 
+        . . . . . . 2 5 5 2 . . . . . . 
+        . . . . . . . 2 2 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 0, -50)
+    music.pewPew.play()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
+    ASTEROID.destroy()
+    mySprite.destroy(effects.confetti, 500)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    mySprite.destroy(effects.fire, 500)
+    scene.cameraShake(4, 500)
+})
 let ASTEROID: Sprite = null
+let projectile: Sprite = null
+let mySprite: Sprite = null
 game.splash("BENVINGUTS A L'ESPAI", "Apreta A per començar i B per disperar")
 effects.starField.startScreenEffect()
-let mySprite = sprites.create(img`
+mySprite = sprites.create(img`
     . . . . . . . c d . . . . . . . 
     . . . . . . . c d . . . . . . . 
     . . . . . . . c d . . . . . . . 
@@ -42,4 +74,6 @@ game.onUpdateInterval(1000, function () {
         . . . . c b b a a 6 b c . . . . 
         . . . . . . b 6 6 c c . . . . . 
         `, 0, 50)
+    ASTEROID.x += randint(0, scene.screenWidth())
+    ASTEROID.setKind(SpriteKind.Enemy)
 })
