@@ -1,4 +1,4 @@
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -21,11 +21,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
     ASTEROID.destroy()
-    mySprite.destroy(effects.confetti, 500)
+    otherSprite.destroy(effects.confetti, 500)
+    info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
-    mySprite.destroy(effects.fire, 500)
+    otherSprite.destroy(effects.fire, 500)
     scene.cameraShake(4, 500)
 })
 let ASTEROID: Sprite = null
