@@ -19,7 +19,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         `, mySprite, 0, -50)
     music.pewPew.play()
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     ASTEROID.destroy()
     otherSprite.destroy(effects.confetti, 500)
     info.changeScoreBy(1)
